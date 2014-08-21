@@ -1,0 +1,7 @@
+---
+applications:
+- name:      es-tester
+  host:      es-tester-<my initials here>
+  memory:    128M
+  instances: 1
+  command:   node app

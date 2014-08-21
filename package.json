@@ -1,0 +1,19 @@
+{
+  "name":               "EventSource-tester",
+  "description":        "app to test EventSource",
+  "version":            "1.0.0",
+  "author":             "pmuellr",
+  "license":            "Apache-2.0",
+  "homepage":           "https://github.com/pmuellr/EventSource-tester",
+  "repository": {
+    "type":             "git",
+    "url":              "https://github.com/pmuellr/EventSource-tester.git"
+  },
+  "dependencies": {
+    "cfenv":            "0.2.x",
+    "hapi":             "6.5.x",
+    "underscore":       "1.6.x"
+  },
+  "devDependencies": {
+  }
+}
