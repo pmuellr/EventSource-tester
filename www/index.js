@@ -3,6 +3,7 @@
 var eventSource
 
 $(main)
+$(setInterval(checkEventSourceClosed, 5000))
 
 //------------------------------------------------------------------------------
 function main() {
@@ -15,8 +16,6 @@ function main() {
   eventSource.onmessage = onMessage
 
   eventSource.addEventListener("time", onTimeEvent, false)
-
-  setInterval(checkEventSourceClosed, 5000)
 }
 
 //------------------------------------------------------------------------------
