@@ -1,16 +1,31 @@
 /* Licensed under the Apache License. See footer for details. */
 
+var eventSource
+
 $(main)
 
 //------------------------------------------------------------------------------
 function main() {
-  var eventSource = new EventSource("events")
+  if (eventSource) eventSource.close()
+
+  eventSource = new EventSource("events")
 
   eventSource.onopen    = onOpen
   eventSource.onerror   = onError
   eventSource.onmessage = onMessage
 
   eventSource.addEventListener("time", onTimeEvent, false)
+
+  setInterval(checkEventSourceClosed, 5000)
+}
+
+//------------------------------------------------------------------------------
+function checkEventSourceClosed() {
+  if (eventSource.readyState != EventSource.CLOSED) return
+
+  log("eventSource: closed")
+
+  main()
 }
 
 //------------------------------------------------------------------------------
@@ -22,10 +37,6 @@ function onOpen() {
 function onError(event) {
   var readyState = ReadyStates[event.target.readyState]
   log("eventSource: error:       `" + event.type + "`; readyState: " + readyState)
-
-  if (event.target.readyState == EventSource.CLOSED) {
-    setTimeout(main, 5000)
-  }
 }
 
 //------------------------------------------------------------------------------
