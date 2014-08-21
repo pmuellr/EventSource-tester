@@ -20,7 +20,12 @@ function onOpen() {
 
 //------------------------------------------------------------------------------
 function onError(event) {
-  log("eventSource: error:       `" + event.type + "`")
+  var readyState = ReadyStates[event.target.readyState]
+  log("eventSource: error:       `" + event.type + "`; readyState: " + readyState)
+
+  if (event.target.readyState == EventSource.CLOSED) {
+    setTimeout(main, 5000)
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -44,6 +49,13 @@ function log(message) {
 function htmlEscape(string) {
   return $("<div/>").text(string).html()
 }
+
+//------------------------------------------------------------------------------
+var ReadyStates = []
+
+ReadyStates[EventSource.CONNECTING] = "CONNECTING"
+ReadyStates[EventSource.OPEN]       = "OPEN"
+ReadyStates[EventSource.CLOSED]     = "CLOSED"
 
 /*
 #-------------------------------------------------------------------------------
