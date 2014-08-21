@@ -2,22 +2,25 @@ EventSource-tester
 ================================================================================
 
 A node.js server that tests out
-[w3 Server-Sent Events][http://dev.w3.org/html5/eventsource/]
+[w3 Server-Sent Events](http://dev.w3.org/html5/eventsource/)
 aka
 [SSE](http://www.html5rocks.com/en/tutorials/eventsource/basics/)
 aka
-[EventSource][https://developer.mozilla.org/en-US/docs/Web/API/EventSource]
-
+[EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource)
+.
 
 
 running locally
 ================================================================================
 
-* `git clone` this repo
-* `cd` into the git repo clone
+* run `git clone` to get the code
+* run `cd` to change directory into the code
 * run `npm install` to install node dependencies
 * run `node app` to start the application
-* visit the URL printed to the console when the application starts
+* in a browser, visit the URL printed to the console when the application starts
+
+The browser window will display events occurring around the `EventSource` it
+is accessing.
 
 
 
@@ -27,8 +30,11 @@ running on Cloud Foundry
 * copy `manifest-sample.yml` to `manifest.yml`
 * edit `manifest.yml`, change the `host` property to something unique
 * run `cf push`
-* shortly after the `cf push` starts, open a new terminal and run `cf logs es-tester`
-* visit the URL printed to the console when the application starts
+* shortly after the `cf push` starts, open a new terminal and run
+  `cf logs es-tester`
+* in a browser, visit the URL printed to the console when the application starts
+
+Same browser window as when running locally.
 
 
 
@@ -53,9 +59,9 @@ command:
     jbuild watch
 
 When you run this command, the application will be built from source, the server
-started, and tests run.  When you subsequently edit and then save one of the
-source files, the application will be re-built, the server re-started, and the
-tests re-run.  For ever.  Use Ctrl-C to exit the `jbuild watch` loop.
+started, and tests run, etc.  When you subsequently edit and then save one of
+the source files, the application will be re-built, the server re-started, and
+the tests re-run.  For ever.  Use Ctrl-C to exit the `jbuild watch` loop.
 
 You can run those build, server, and test tasks separately.  Run `jbuild`
 with no arguments to see what tasks are available, along with a short
