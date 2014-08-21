@@ -16,6 +16,8 @@ tasks = defineTasks exports,
 
 WatchSpec = "app.js www www/**/*"
 
+mkdir "-p", "tmp"
+
 #-------------------------------------------------------------------------------
 tasks.build = ->
   log "running build"
