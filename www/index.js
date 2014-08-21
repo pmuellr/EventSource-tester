@@ -29,24 +29,42 @@ function checkEventSourceClosed() {
 }
 
 //------------------------------------------------------------------------------
-function onOpen() {
+function onOpen(event) {
+  // event origin is `undefined` here!
+  // if (!validOrigin(event)) return;
+
   log("eventSource: open")
 }
 
 //------------------------------------------------------------------------------
 function onError(event) {
+  // event origin is `undefined` here!
+  // if (!validOrigin(event)) return;
+
   var readyState = ReadyStates[event.target.readyState]
   log("eventSource: error:       `" + event.type + "`; readyState: " + readyState)
 }
 
 //------------------------------------------------------------------------------
 function onMessage(event) {
+  if (!validOrigin(event)) return
+
   log("eventSource: message:     `" + event.data + "`")
 }
 
 //------------------------------------------------------------------------------
 function onTimeEvent(event) {
+  if (!validOrigin(event)) return
+
   log("eventSource: event: time: `" + event.data + "`")
+}
+
+//------------------------------------------------------------------------------
+function validOrigin(event) {
+  if (document.location.origin == event.origin) return true
+
+  log("invalid origin for event type: " + event.type + ": " + event.origin)
+  return false
 }
 
 //------------------------------------------------------------------------------
