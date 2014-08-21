@@ -44,14 +44,14 @@ function onEventsRequest(request, reply) {
   var response = request.raw.res  // http's response object
   var listener = {request: request, response: response}
 
+  if (!initEventResponse(request, response, reply)) return
+
   logi("request for " + request.path)
 
   Listeners[id] = listener
 
   response.on("error", onError)
   response.on("close", onClose)
-
-  if (!initEventResponse(request, response, reply)) return
 
   //-----------------------------------
   function onError(err) {
@@ -100,8 +100,11 @@ function initEventResponse(request, response, reply) {
 
 //------------------------------------------------------------------------------
 function onInterval() {
+  var listener
+  var message
+
   for (var id in Listeners) {
-    var listener = Listeners[id]
+    listener = Listeners[id]
 
     message = {time: new Date}
     message = "data: " + JSON.stringify(message) + "\n\n"
