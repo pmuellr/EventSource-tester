@@ -30,7 +30,7 @@ function main() {
 
   server.start(onServerStarted)
 
-  setInterval(onInterval, 10000)
+  setInterval(onInterval, 5000)
 }
 
 //------------------------------------------------------------------------------

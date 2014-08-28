@@ -3,43 +3,48 @@
 var eventSource
 
 $(main)
-$(setInterval(checkEventSourceClosed, 5000))
 
 //------------------------------------------------------------------------------
 function main() {
   if (eventSource) eventSource.close()
 
   eventSource = new EventSource("events")
+  enableCloseEvent(eventSource)
 
-  eventSource.onopen    = onOpen
-  eventSource.onerror   = onError
-  eventSource.onmessage = onMessage
-
-  eventSource.addEventListener("time", onTimeEvent, false)
+  eventSource.addEventListener("open",    onOpen,      false)
+  eventSource.addEventListener("close",   onClose,     false)
+  eventSource.addEventListener("error",   onError,     false)
+  eventSource.addEventListener("message", onMessage,   false)
+  eventSource.addEventListener("time",    onTimeEvent, false)
 }
 
 //------------------------------------------------------------------------------
-function checkEventSourceClosed() {
-  if (eventSource.readyState != EventSource.CLOSED) return
+function enableCloseEvent(eventSource) {
+  var interval = setInterval(checkEventSourceClosed, 5000)
 
+  function checkEventSourceClosed() {
+    if (eventSource.readyState != EventSource.CLOSED) return
+
+    eventSource.dispatchEvent(new Event("close"))
+
+    clearInterval(interval)
+  }
+}
+
+//------------------------------------------------------------------------------
+function onOpen(event) {
+  log("eventSource: open")
+}
+
+//------------------------------------------------------------------------------
+function onClose(event) {
   log("eventSource: closed")
 
   main()
 }
 
 //------------------------------------------------------------------------------
-function onOpen(event) {
-  // event origin is `undefined` here!
-  // if (!validOrigin(event)) return;
-
-  log("eventSource: open")
-}
-
-//------------------------------------------------------------------------------
 function onError(event) {
-  // event origin is `undefined` here!
-  // if (!validOrigin(event)) return;
-
   var readyState = ReadyStates[event.target.readyState]
   log("eventSource: error:       `" + event.type + "`; readyState: " + readyState)
 }
